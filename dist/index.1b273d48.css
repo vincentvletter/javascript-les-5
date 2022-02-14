@@ -1,0 +1,70 @@
+h1, a {
+    font-family: "Monotype Corsiva";
+    text-align: center;
+}
+
+#world-map {
+    width: 100%;
+}
+
+#country img {
+    width: 20px;
+}
+
+.red {
+    color: #bd5734;
+}
+
+.purple {
+    color: #b0aac0;
+}
+
+.yellow {
+    color: #ffeead;
+}
+
+.green {
+    color: #ddeedd;
+}
+
+.blue {
+    color: #c2d4dd;
+}
+
+ul {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 10px 0px 30px 10px;
+    margin: 10%;
+    max-width: 80%;
+    border: 1px solid #dfdada;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px 0px;
+}
+
+li {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    width: 30%;
+    margin: 10px;
+}
+
+li img {
+    max-height: 25px;
+    max-width: 25px;
+    margin-right: 10px;
+}
+
+h4 {
+    margin: 0;
+}
+
+p {
+    margin: 0;
+}
+/*# sourceMappingURL=index.1b273d48.css.map */
