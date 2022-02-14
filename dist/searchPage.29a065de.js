@@ -140,12 +140,12 @@
       this[globalName] = mainExports;
     }
   }
-})({"1Mq12":[function(require,module,exports) {
+})({"5rsDR":[function(require,module,exports) {
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "4a236f9275d0a351";
-module.bundle.HMR_BUNDLE_ID = "b5b6c481d56a3cb1";
+module.bundle.HMR_BUNDLE_ID = "b415354329a065de";
 "use strict";
 function _createForOfIteratorHelper(o, allowArrayLike) {
     var it;
@@ -458,55 +458,64 @@ function hmrAcceptRun(bundle, id) {
     acceptedAssets[id] = true;
 }
 
-},{}],"5HwUs":[function(require,module,exports) {
+},{}],"bk0YP":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
-async function getCountries() {
+async function getCountries(name) {
     try {
-        const getCountryInfo = await _axiosDefault.default.get("https://restcountries.com/v2/all");
-        createCountryList(getCountryInfo.data);
+        const result = await _axiosDefault.default.get(`https://restcountries.com/v2/name/${name}`);
+        const getCountryInfo = result.data[0];
+        console.log(getCountryInfo);
+        createCountryTile(getCountryInfo);
     } catch (e) {
         console.error(e);
+        testError(name);
     }
 }
-function createCountryList(countries) {
-    countries.sort((a, b)=>{
-        return a.population - b.population;
-    });
-    const formatCountryTile = document.getElementById("country");
-    let color;
-    function asignColorToRegion(regionName) {
-        switch(regionName){
-            case "Africa":
-                color = "blue";
-                break;
-            case "Americas":
-                color = "green";
-                break;
-            case "Asia":
-                color = "red";
-                break;
-            case "Europe":
-                color = "yellow";
-                break;
-            case "Oceania":
-                color = "purple";
-                break;
-        }
-    }
-    const createCountryTileList = countries.map((getCountry)=>{
-        asignColorToRegion(getCountry.region);
-        return `
-                <li>
-                     <h4 class=${color}><img src="${getCountry.flag}" />${getCountry.name}</h4>
-                     <p>has a population of ${getCountry.population} people</p>
-                </li>
-        `;
-    });
-    formatCountryTile.innerHTML = createCountryTileList.join("");
+function testError(name) {
+    const formatCountryTile = document.getElementById("container");
+    formatCountryTile.innerHTML = `
+    <div id="country-info-tile">
+    <p class="warning">"${name}" is not a country</p>
+    </div>
+    `;
 }
-getCountries();
+function createCountryTile(country) {
+    const formatCountryTile = document.getElementById("container");
+    formatCountryTile.innerHTML = `
+     <div id="country-info-tile">    
+     <h4><img src="${country.flag}"/>${country.name}</h4>
+     <span></span>
+     <p>${country.name} is situated in ${country.subregion}.</p>
+     <p>The capital is ${country.capital}.</p>
+     <p>It has a population of ${country.population} people.</p>
+     <p>They speak ${getSpokenLanguages(country.languages)}.</p>
+     <p>And you can pay with ${getCountryCurrencies(country.currencies)}.</p>
+     </div>
+`;
+}
+function getSpokenLanguages(languages) {
+    // return languages.map(language => `${language.name}`).join(" ,  ");
+    let spokenLanguages = "";
+    console.log(languages.length + " dit wordt meegegeven");
+    if (languages.length - 1 !== 0) {
+        for(let i = 0; i < languages.length; i++)if (i < languages.length - 1) spokenLanguages = spokenLanguages + `${languages[i].name}, `;
+        else spokenLanguages = spokenLanguages + `and ${languages[i].name}`;
+    } else spokenLanguages = `${languages[0].name}`;
+    return spokenLanguages;
+}
+function getCountryCurrencies(currencies) {
+    return currencies.map((currency)=>`${currency.name}'s`
+    ).join(" and ");
+}
+const searchForm = document.getElementById("form");
+searchForm.addEventListener("submit", searchingCountries);
+function searchingCountries(e) {
+    e.preventDefault();
+    const inputField = document.getElementById("search-country");
+    getCountries(inputField.value);
+}
 
 },{"axios":"1IeuP","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"1IeuP":[function(require,module,exports) {
 module.exports = require('./lib/axios');
@@ -2099,6 +2108,6 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}]},["1Mq12","5HwUs"], "5HwUs", "parcelRequirecb08")
+},{}]},["5rsDR","bk0YP"], "bk0YP", "parcelRequirecb08")
 
-//# sourceMappingURL=index.d56a3cb1.js.map
+//# sourceMappingURL=searchPage.29a065de.js.map
